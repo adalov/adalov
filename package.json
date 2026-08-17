@@ -8,8 +8,8 @@
   "scripts": {
     "build": "tsc --build tsconfig.packages.build.json",
     "build:dev": "tsc --build tsconfig.packages.json",
-    "clear": "sh ./scripts/clear.sh",
-    "prepare:packages": "sh ./scripts/prepare-packages.sh",
+    "clear": "bash ./scripts/clear.sh",
+    "prepare:packages": "bash ./scripts/prepare-packages.sh",
     "tsc": "tsc"
   },
   "repository": {
