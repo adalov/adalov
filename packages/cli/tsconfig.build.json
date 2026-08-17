@@ -2,5 +2,10 @@
   "extends": [
     "./tsconfig.json",
     "../../tsconfig.build.json"
+  ],
+  "references": [
+    {
+      "path": "../common/tsconfig.build.json"
+    }
   ]
 }
