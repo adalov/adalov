@@ -8,6 +8,8 @@
   "scripts": {
     "build": "tsc --build tsconfig.packages.build.json",
     "build:dev": "tsc --build tsconfig.packages.json",
+    "clear": "sh ./scripts/clear.sh",
+    "prepare:packages": "sh ./scripts/prepare-packages.sh",
     "tsc": "tsc"
   },
   "repository": {
@@ -31,6 +33,21 @@
     "url": "https://github.com/adalov/adalov/issues"
   },
   "homepage": "https://github.com/adalov/adalov#readme",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.0.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=10.0.0",
+      "onFail": "error"
+    }
+  },
   "devDependencies": {
     "typescript": "^7.0.2"
   }
