@@ -1,0 +1,15 @@
+{
+  "name": "@adalov/core",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "dependencies": {
+    "@adalov/common": "^0.0.0",
+    "@adalov/metadata": "^0.0.0"
+  }
+}

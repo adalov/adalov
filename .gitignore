@@ -1,0 +1,17 @@
+# Outputs
+/dist
+packages/*/build/
+
+# Dependencies
+/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Mac OSX Finder files.
+**/.DS_Store
+.DS_Store

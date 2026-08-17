@@ -1,0 +1,37 @@
+{
+  "name": "adalov",
+  "private": true,
+  "description": "Node.js framework based on TypeScript for building microservices-oriented applications",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.packages.build.json",
+    "build:dev": "tsc --build tsconfig.packages.json",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adalov/adalov.git"
+  },
+  "keywords": [
+    "nodejs",
+    "node",
+    "api",
+    "typescript",
+    "rest",
+    "restful",
+    "microservices",
+    "nodejs-framework",
+    "typescript-framework"
+  ],
+  "author": "Franco Basaglia <francobasaglia94@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adalov/adalov/issues"
+  },
+  "homepage": "https://github.com/adalov/adalov#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
