@@ -87,7 +87,7 @@ fix/core-bootstrap
 
 Descriptions must contain lower-case alphanumeric words separated by hyphens.
 
-The permanent branches are exempt from this rule:
+Permanent branches are defined centrally in [`scripts/shared/branches.sh`](../scripts/shared/branches.sh) and are exempt from this rule. The current permanent branches are:
 
 ```text
 main
