@@ -13,7 +13,7 @@ This document describes the current architectural direction of Adalov and the re
 
 A primary goal of Adalov is to provide framework functionality without introducing third-party runtime dependencies.
 
-The framework should rely on Node.js and its standard APIs whenever practical; and packages may depend on other `@adalov/*` packages, but published framework are intended not to pull external runtime dependencies into consumer applications.
+The framework should rely on Node.js and its standard APIs whenever practical; and packages may depend on other `@adalov/*` packages, but published framework packages are intended not to pull external runtime dependencies into consumer applications.
 
 Development tooling is intentionally excluded from this constraint. TypeScript, Commitlint, Husky, testing tools, linters, and similar packages may be used as development dependencies when they improve the repository workflow or code quality.
 

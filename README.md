@@ -32,7 +32,7 @@ Install the repository dependencies from the project root:
 npm install
 ```
 
-This farmework is organized as an npm Workspaces monorepo, and packages live under `packages/`.
+This framework is organized as an npm Workspaces monorepo, and packages live under `packages/`.
 
 ## Packages
 
