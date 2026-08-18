@@ -11,6 +11,14 @@ Adalov aims to provide framework functionality using Node.js and its standard AP
 
 Packages may depend on other `@adalov/*` packages, while development tooling such as TypeScript, testing, linting, and repository automation is intentionally outside this constraint.
 
+## Why Adalov?
+
+The name **Adalov** is derived from [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace), the 19th-century mathematician whose work on Charles Babbage's Analytical Engine is widely recognized as one of the earliest expressions of computer programming.
+
+The name is intended as a small tribute not only to Lovelace, but to the people who laid the foundations of computing long before the technologies we use today became possible. Adalov is built with the same perspective in mind: most of what feels new stands on decades — and sometimes centuries — of ideas, experimentation, and work that came before it.
+
+[Learn more about Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace)
+
 ## Requirements
 
 - Node.js 22 or newer
