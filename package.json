@@ -4,13 +4,18 @@
   "private": true,
   "description": "Node.js framework based on TypeScript for building microservices-oriented applications",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "playground"
   ],
   "scripts": {
     "build": "tsc --build tsconfig.packages.build.json",
     "build:dev": "tsc --build tsconfig.packages.json",
     "clear": "bash ./scripts/clear.sh",
     "prepare:packages": "bash ./scripts/prepare-packages.sh",
+    "playground": "bash ./scripts/playground.sh",
+    "playground:build": "tsc --project playground/tsconfig.json",
+    "playground:watch": "tsc --project playground/tsconfig.json --watch",
+    "playground:start": "node --watch playground/build/index.js",
     "tsc": "tsc",
     "commitlint": "commitlint",
     "validate:branch": "bash scripts/validate-branch-name.sh",

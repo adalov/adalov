@@ -13,5 +13,9 @@ for package in "${PACKAGES[@]}"; do
   rm -rf "$package_dir/.tsbuildinfo"
 done
 
+# Clear Playground outputs
+rm -rf "$PLAYGROUND_BUILD_DIR"
+rm -rf "$PLAYGROUND_DIR/.tsbuildinfo"
+
 # Clear Dist output
 rm -rf "$DIST_DIR"

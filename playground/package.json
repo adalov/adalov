@@ -1,0 +1,10 @@
+{
+  "name": "adalov-playground",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@adalov/core": "0.0.0",
+    "@adalov/http": "0.0.0"
+  }
+}
