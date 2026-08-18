@@ -5,6 +5,8 @@
 
 This document describes how the Adalov monorepo is organized for local development and how to add new framework packages.
 
+**Adalov is still an MVP, so these decisions may evolve as the framework gains real implementations and usage.**
+
 ## Requirements
 
 - Node.js 22 or newer

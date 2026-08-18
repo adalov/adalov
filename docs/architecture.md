@@ -5,7 +5,7 @@
 
 This document describes the current architectural direction of Adalov and the repository structure that supports it.
 
-Adalov is still an MVP, so these decisions may evolve as the framework gains real implementations and usage.
+**Adalov is still an MVP, so these decisions may evolve as the framework gains real implementations and usage.**
 
 ## Design Goals
 
@@ -13,7 +13,7 @@ Adalov is still an MVP, so these decisions may evolve as the framework gains rea
 
 A primary goal of Adalov is to provide framework functionality without introducing third-party runtime dependencies.
 
-The framework should rely on Node.js and its standard APIs whenever practical. Adalov packages may depend on other `@adalov/*` packages, but published framework packages are intended not to pull external runtime dependencies into consumer applications.
+The framework should rely on Node.js and its standard APIs whenever practical; and packages may depend on other `@adalov/*` packages, but published framework are intended not to pull external runtime dependencies into consumer applications.
 
 Development tooling is intentionally excluded from this constraint. TypeScript, Commitlint, Husky, testing tools, linters, and similar packages may be used as development dependencies when they improve the repository workflow or code quality.
 
@@ -27,17 +27,17 @@ The repository favors native Node.js, npm Workspaces, and TypeScript capabilitie
 
 ### Scalable Monorepo Structure
 
-Packages currently live in a single npm Workspaces monorepo and are released using a shared version. Package boundaries are intentionally kept independent enough to allow separate versioning or repository extraction in the future if the project requires it.
+Packages currently live in a single npm Workspaces monorepo and are released using a shared version. Boundaries are intentionally kept independent enough to allow separate versioning or repository extraction in the future if the project requires it.
 
 ## Packages
 
 | Package | Responsibility | Internal Dependencies |
 | --- | --- | --- |
 | [`@adalov/cli`](../packages/cli/README.md) | Command-line tooling for Adalov. | `@adalov/common` |
-| [`@adalov/common`](../packages/common/README.md) | Shared utilities, types, constants, and common contracts. | None |
+| [`@adalov/common`](../packages/common/README.md) | Shared utilities, types, constants, and common contracts. | -- |
 | [`@adalov/core`](../packages/core/README.md) | Core framework orchestration and high-level runtime primitives. | `@adalov/common`, `@adalov/metadata` |
 | [`@adalov/http`](../packages/http/README.md) | HTTP-specific framework functionality and integrations. | `@adalov/common`, `@adalov/core`, `@adalov/metadata` |
-| [`@adalov/metadata`](../packages/metadata/README.md) | Shared metadata definitions and related primitives. | None |
+| [`@adalov/metadata`](../packages/metadata/README.md) | Shared metadata definitions and related primitives. | -- |
 
 The current dependency graph is intentionally one-directional:
 
@@ -75,7 +75,7 @@ packages/<package>/
 `index.ts` defines the package public API. Cross-package imports should use the package name, for example:
 
 ```ts
-import { something } from '@adalov/common';
+import { Logger } from '@adalov/common';
 ```
 
 Imports into another package's internal `lib/` structure should not be used as part of the framework architecture.

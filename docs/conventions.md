@@ -7,6 +7,8 @@ This document describes the Git conventions currently enforced by the Adalov rep
 
 The goal is to keep branch names and commit history predictable enough to support future automation around releases, changelogs, and package-level changes.
 
+**Adalov is still an MVP, so these decisions may evolve as the framework gains real implementations and usage.**
+
 ## Commit Messages
 
 Adalov uses Conventional Commits through Commitlint.
@@ -29,16 +31,12 @@ feat(core): add application bootstrapper
 
 | Type | Intended Use |
 | --- | --- |
-| `build` | Changes to the build system or build-related configuration. |
-| `chore` | Repository maintenance that does not fit another type. |
-| `ci` | Continuous integration configuration and automation. |
-| `docs` | Documentation-only changes. |
-| `feat` | New functionality. |
-| `fix` | Bug fixes. |
-| `perf` | Performance improvements. |
-| `refactor` | Code changes that neither add functionality nor fix a bug. |
-| `revert` | Reverts of previous changes. |
-| `test` | Test additions or test-related changes. |
+| `build` | Changes to the build system or build-related configuration |
+| `chore` | Repository maintenance that does not fit another type |
+| `ci` | Continuous Integration configuration and automation |
+| `docs` | Documentation-only changes |
+| `feat` | New functionality |
+| `fix` | Bug fixes |
 
 ### Allowed Commit Scopes
 
@@ -85,7 +83,6 @@ Examples:
 chore/initial-setup
 feat/http-router
 fix/core-bootstrap
-refactor/metadata-storage
 ```
 
 Descriptions must contain lower-case alphanumeric words separated by hyphens.

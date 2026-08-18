@@ -4,11 +4,7 @@ const commitTypes = [
   'ci',
   'docs',
   'feat',
-  'fix',
-  'perf',
-  'refactor',
-  'revert',
-  'test',
+  'fix'
 ];
 
 const commitScopes = ['cli', 'common', 'core', 'http', 'metadata', 'repo'];
