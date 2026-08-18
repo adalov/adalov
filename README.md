@@ -1,8 +1,15 @@
 # Adalov
 
-Adalov is a Node.js & TypeScript framework for building microservices-oriented applications.
+Adalov is a Node.js & TypeScript framework for building microservices-oriented applications, designed around a **zero external runtime dependencies** goal.
 
-**This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
+> [!WARNING]
+> ☣️ **This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
+
+## Zero Runtime Dependencies
+
+Adalov aims to provide framework functionality using Node.js and its standard APIs without pulling third-party runtime dependencies into consumer applications.
+
+Adalov packages may depend on other `@adalov/*` packages, while development tooling such as TypeScript, testing, linting, and repository automation is intentionally outside this constraint.
 
 ## Requirements
 
@@ -48,7 +55,11 @@ TypeScript compiler output is generated locally under `packages/<package>/build/
 
 ## Documentation
 
-Project documentation is being organized and will be added as the framework evolves.
+Technical documentation is being expanded as the framework evolves:
+
+- [Architecture](./docs/architecture.md)
+- [Development](./docs/development.md)
+- [Repository Conventions](./docs/conventions.md)
 
 ## License
 
