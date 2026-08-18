@@ -74,4 +74,4 @@ Technical documentation is being expanded as the framework evolves:
 
 Adalov is released under the [MIT License](./LICENSE).
 
-[El gran ensayo de encontrar la eternidad](https://www.youtube.com/watch?v=uL-08eRgf94)
+**[El gran ensayo de encontrar la eternidad](https://www.youtube.com/watch?v=uL-08eRgf94)**
