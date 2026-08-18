@@ -11,7 +11,10 @@
     "build:dev": "tsc --build tsconfig.packages.json",
     "clear": "bash ./scripts/clear.sh",
     "prepare:packages": "bash ./scripts/prepare-packages.sh",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "commitlint": "commitlint",
+    "validate:branch": "bash scripts/validate-branch-name.sh",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,9 @@
     }
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "husky": "^9.1.7",
     "typescript": "^7.0.2"
   }
 }
