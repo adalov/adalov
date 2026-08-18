@@ -285,3 +285,8 @@ packages/<package>/.tsbuildinfo/
 ```
 
 It is ignored by Git and removed by `npm run clear` together with compiler and distribution outputs.
+
+## More Documentation
+
+- [Architecture](./architecture.md)
+- [Repository Conventions](./conventions.md)
