@@ -1,5 +1,7 @@
 # Adalov
 
+[English](./README.md) | [Español](./README.es.md)
+
 Adalov is a Node.js & TypeScript framework for building microservices-oriented applications, designed around a **zero external runtime dependencies** goal.
 
 > [!WARNING]
