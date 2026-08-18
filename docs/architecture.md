@@ -120,3 +120,8 @@ consumer
 TypeScript incremental state is stored separately under `packages/<package>/.tsbuildinfo/` and is never part of a distribution artifact.
 
 For development workflows and TypeScript configuration details, see [Development](./development.md).
+
+## More Documentation
+
+- [Development](./development.md)
+- [Repository Conventions](./conventions.md)
