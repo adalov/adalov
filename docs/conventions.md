@@ -128,3 +128,8 @@ npm run validate:branch
 ```
 
 These commands use the same configuration as the Git hooks and should be preferred over duplicating validation rules elsewhere.
+
+## More Documentation
+
+- [Architecture](./architecture.md)
+- [Development](./development.md)
