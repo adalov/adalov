@@ -5,7 +5,7 @@ Adalov is a Node.js & TypeScript framework for building microservices-oriented a
 > [!WARNING]
 > ☣️ **This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
 
-## Zero Runtime Dependencies
+## Zero External Runtime Dependencies
 
 Adalov aims to provide framework functionality using Node.js and its standard APIs without pulling third-party runtime dependencies into consumer applications.
 
@@ -24,7 +24,7 @@ Install the repository dependencies from the project root:
 npm install
 ```
 
-Adalov is organized as an npm Workspaces monorepo. Public packages live under `packages/`.
+Adalov is organized as an npm Workspaces monorepo. Framework packages live under `packages/`.
 
 ## Packages
 
