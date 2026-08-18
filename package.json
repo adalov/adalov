@@ -1,5 +1,6 @@
 {
   "name": "adalov",
+  "version": "0.0.0",
   "private": true,
   "description": "Node.js framework based on TypeScript for building microservices-oriented applications",
   "workspaces": [
@@ -8,6 +9,8 @@
   "scripts": {
     "build": "tsc --build tsconfig.packages.build.json",
     "build:dev": "tsc --build tsconfig.packages.json",
+    "clear": "bash ./scripts/clear.sh",
+    "prepare:packages": "bash ./scripts/prepare-packages.sh",
     "tsc": "tsc",
     "commitlint": "commitlint",
     "validate:branch": "bash scripts/validate-branch-name.sh",
@@ -34,6 +37,21 @@
     "url": "https://github.com/adalov/adalov/issues"
   },
   "homepage": "https://github.com/adalov/adalov#readme",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.0.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=10.0.0",
+      "onFail": "error"
+    }
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",

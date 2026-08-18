@@ -1,13 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "./build"
-  },
-  "include": [
-    "index.ts",
-    "lib/**/*.ts"
-  ],
+  "extends": "../../tsconfig.package.json",
   "references": [
     {
       "path": "../common/tsconfig.json"

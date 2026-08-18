@@ -2,6 +2,7 @@
   "name": "@adalov/cli",
   "version": "0.0.0",
   "type": "module",
+  "private": true,
   "exports": {
     ".": {
       "types": "./build/index.d.ts",
@@ -9,6 +10,6 @@
     }
   },
   "dependencies": {
-    "@adalov/common": "^0.0.0"
+    "@adalov/common": "0.0.0"
   }
 }

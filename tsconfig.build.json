@@ -4,6 +4,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitOverride": true,
-    "allowUnreachableCode": false
+    "allowUnreachableCode": false,
+    "tsBuildInfoFile": "${configDir}/.tsbuildinfo/build.tsbuildinfo"
   }
 }

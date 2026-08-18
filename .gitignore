@@ -1,6 +1,7 @@
 # Outputs
 /dist
 packages/*/build/
+packages/*/.tsbuildinfo/
 
 # Dependencies
 /node_modules
