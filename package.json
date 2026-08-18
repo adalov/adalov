@@ -1,5 +1,6 @@
 {
   "name": "adalov",
+  "version": "0.0.0",
   "private": true,
   "description": "Node.js framework based on TypeScript for building microservices-oriented applications",
   "workspaces": [
