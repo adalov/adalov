@@ -46,32 +46,13 @@ Each framework package is an npm workspace under `packages/`.
 
 TypeScript configuration is split by responsibility instead of duplicating compiler options in every package.
 
-### `tsconfig.json`
-
-The repository-wide base configuration. It defines the common compiler behavior shared by development and build configurations, including strict type checking, ESM/NodeNext resolution, declarations, decorators, and composite project support.
-
-### `tsconfig.build.json`
-
-Extends the base configuration with stricter build-only checks. It also defines the build-specific TypeScript incremental state location.
-
-### `tsconfig.package.json`
-
-Defines the common source layout for every package:
-
-- package root as `rootDir`;
-- `build/` as compiler output;
-- `.tsbuildinfo/dev.tsbuildinfo` as development incremental state;
-- `index.ts` and `lib/**/*.ts` as package sources.
-
-Individual package `tsconfig.json` files extend this configuration and normally contain only package-specific project references.
-
-### `tsconfig.packages.json`
-
-The development project graph. It references the development `tsconfig.json` of every package and is used by `npm run build:dev`.
-
-### `tsconfig.packages.build.json`
-
-The strict build project graph. It references the `tsconfig.build.json` of every package and is used by `npm run build`.
+| Configuration | Responsibility |
+| --- | --- |
+| `tsconfig.json` | Repository-wide base configuration. Defines the common compiler behavior shared by development and build configurations, including strict type checking, ESM/NodeNext resolution, declarations, decorators, and composite project support. |
+| `tsconfig.build.json` | Extends the base configuration with stricter build-only checks and defines the build-specific TypeScript incremental state location. |
+| `tsconfig.package.json` | Defines the common source layout for every package: package root as `rootDir`, `build/` as compiler output, `.tsbuildinfo/dev.tsbuildinfo` as development incremental state, and `index.ts` plus `lib/**/*.ts` as package sources. Individual package `tsconfig.json` files extend this configuration and normally contain only package-specific project references. |
+| `tsconfig.packages.json` | Development project graph. References the development `tsconfig.json` of every package and is used by `npm run build:dev`. |
+| `tsconfig.packages.build.json` | Strict build project graph. References the `tsconfig.build.json` of every package and is used by `npm run build`. |
 
 ### Package Project References
 
