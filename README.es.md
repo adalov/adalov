@@ -15,11 +15,11 @@ Los paquetes pueden depender de otros paquetes `@adalov/*`, mientras que las her
 
 ## ¿Por qué Adalov?
 
-El nombre **Adalov** deriva de [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace), la matemática del siglo XIX cuyo trabajo sobre la [Máquina Analítica de Charles Babbage](https://en.wikipedia.org/wiki/Analytical_Engine) es ampliamente reconocido como una de las primeras expresiones de la programación informática.
+El nombre **Adalov** deriva de [Ada Lovelace](https://es.wikipedia.org/wiki/Ada_Lovelace), la matemática del siglo XIX cuyo trabajo sobre la [Máquina Analítica de Charles Babbage](https://es.wikipedia.org/wiki/M%C3%A1quina_anal%C3%ADtica) es ampliamente reconocido como una de las primeras expresiones de la programación informática.
 
 El nombre pretende ser un pequeño homenaje no sólo a Lovelace, sino también a las personas que sentaron las bases de la computación mucho antes de que fueran posibles las tecnologías que usamos hoy. Adalov está construido con la misma perspectiva: gran parte de lo que parece nuevo se apoya en décadas —y a veces siglos— de ideas, experimentación y trabajo que lo precedieron.
 
-[Conocé más sobre Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace)
+[Conocé más sobre Ada Lovelace](https://es.wikipedia.org/wiki/Ada_Lovelace)
 
 ## Requisitos
 
