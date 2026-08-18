@@ -39,15 +39,17 @@ Packages currently live in a single npm Workspaces monorepo and are released usi
 The current dependency graph is intentionally one-directional:
 
 ```text
-common ───────────────┐
-  │                   │
-  ├────> core ────────┼────> http
-  │       ▲           │
-  │       │           │
-  └────> cli      metadata
-          
-metadata ─────> core
-metadata ────────────> http
+cli
+└──> common
+
+core
+├──> common
+└──> metadata
+
+http
+├──> common
+├──> core
+└──> metadata
 ```
 
 `core` does not depend on protocol-specific packages such as `http`. Protocol packages build on top of the core abstractions instead.
