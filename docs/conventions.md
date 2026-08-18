@@ -1,5 +1,8 @@
 # Repository Conventions
 
+> [!WARNING]
+> ☣️ **This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
+
 This document describes the Git conventions currently enforced by the Adalov repository.
 
 The goal is to keep branch names and commit history predictable enough to support future automation around releases, changelogs, and package-level changes.

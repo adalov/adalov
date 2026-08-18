@@ -1,5 +1,8 @@
 # Architecture
 
+> [!WARNING]
+> ☣️ **This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
+
 This document describes the current architectural direction of Adalov and the repository structure that supports it.
 
 Adalov is still an MVP, so these decisions may evolve as the framework gains real implementations and usage.
