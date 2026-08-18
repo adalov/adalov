@@ -1,26 +1,26 @@
 # Adalov Playground
 
 > [!WARNING]
-> ☣️ **Este es un MVP en desarrollo activo. Cualquier cosa puede cambiar en cualquier momento. No recomendamos utilizar este framework en proyectos de producción.**
+> ☣️ **This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
 
-El Playground es una aplicación de desarrollo local utilizada para ejercitar Adalov a través de las APIs públicas de sus paquetes.
+The Playground is a local development application used to exercise Adalov through its public package APIs.
 
-Vive intencionalmente fuera de `packages/` porque no es un paquete publicable del framework. Está registrado como un workspace privado de npm únicamente para que los paquetes locales `@adalov/*` se vinculen mediante la instalación de workspaces del repositorio.
+It intentionally lives outside `packages/` because it is not a publishable framework package. It is registered as a private npm workspace only so local `@adalov/*` packages are linked through the repository workspace installation.
 
-## Desarrollo
+## Development
 
-Instalá las dependencias del repositorio desde el root:
+Install repository dependencies from the root:
 
 ```bash
 npm install
 ```
 
-Iniciá el ciclo de desarrollo del Playground con:
+Start the Playground development loop with:
 
 ```bash
 npm run playground
 ```
 
-El ciclo de desarrollo compila inicialmente los paquetes del framework y el Playground, luego mantiene ambas capas de compilación de TypeScript en modo watch mientras Node.js observa el entrypoint compilado del Playground y sus módulos importados.
+The development loop builds the framework packages and Playground once, then keeps both TypeScript compilation layers in watch mode while Node.js watches the compiled Playground entrypoint and its imported modules.
 
-Este flujo de trabajo local está intencionalmente separado de la validación final de los paquetes. Las pruebas contra artefactos `.tgz` empaquetados o paquetes publicados en npm deben realizarse desde un proyecto consumidor externo.
+This local workflow is intentionally separate from final package validation. Tests against packed `.tgz` artifacts or npm-published packages should be performed from an external consumer project.
