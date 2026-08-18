@@ -2,9 +2,12 @@
 /dist
 packages/*/build/
 packages/*/.tsbuildinfo/
+/playground/build/
+/playground/.tsbuildinfo/
 
 # Dependencies
 /node_modules
+/playground/node_modules/
 
 # Logs
 logs
