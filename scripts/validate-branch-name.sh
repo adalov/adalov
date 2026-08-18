@@ -1,13 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -euo pipefail
 
-readonly PERMANENT_BRANCHES=(main develop)
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/shared/branches.sh"
+source "$SCRIPT_DIR/shared/paths.sh"
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-COMMITLINT_CONFIG="$ROOT_DIR/commitlint.config.mjs"
+readonly COMMITLINT_CONFIG="$ROOT_DIR/commitlint.config.mjs"
 
-VALID_TYPES="$(
+readonly VALID_TYPES="$(
   node --input-type=module - "$COMMITLINT_CONFIG" <<'NODE'
 import { pathToFileURL } from 'node:url';
 
