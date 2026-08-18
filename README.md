@@ -13,7 +13,7 @@ Packages may depend on other `@adalov/*` packages, while development tooling suc
 
 ## Why Adalov?
 
-The name **Adalov** is derived from [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace), the 19th-century mathematician whose work on Charles Babbage's Analytical Engine is widely recognized as one of the earliest expressions of computer programming.
+The name **Adalov** is derived from [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace), the 19th-century mathematician whose work on [Charles Babbage's Analytical Engine](https://en.wikipedia.org/wiki/Analytical_Engine) is widely recognized as one of the earliest expressions of computer programming.
 
 The name is intended as a small tribute not only to Lovelace, but to the people who laid the foundations of computing long before the technologies we use today became possible. Adalov is built with the same perspective in mind: most of what feels new stands on decades — and sometimes centuries — of ideas, experimentation, and work that came before it.
 
@@ -73,3 +73,5 @@ Technical documentation is being expanded as the framework evolves:
 ## License
 
 Adalov is released under the [MIT License](./LICENSE).
+
+[El gran ensayo de encontrar la eternidad](https://www.youtube.com/watch?v=uL-08eRgf94)
