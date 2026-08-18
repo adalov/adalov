@@ -106,25 +106,10 @@ npm run validate:branch
 
 The repository uses Husky for local Git hooks.
 
-### `commit-msg`
-
-The commit message hook runs Commitlint against the commit message being created.
-
-```text
-.husky/commit-msg
-```
-
-Invalid commit types, scopes, formatting, or other configured Commitlint rules prevent the commit from completing.
-
-### `pre-push`
-
-The pre-push hook validates branch names before they are pushed.
-
-```text
-.husky/pre-push
-```
-
-Branch validation checks pushed branch refs when available and falls back to the current branch when needed.
+| Hook | Path | Description |
+| --- | --- | --- |
+| `commit-msg` | `.husky/commit-msg` | Runs Commitlint against the commit message being created. Invalid commit types, scopes, formatting, or other configured Commitlint rules prevent the commit from completing. |
+| `pre-push` | `.husky/pre-push` | Validates branch names before they are pushed. Branch validation checks pushed branch refs when available and falls back to the current branch when needed. |
 
 Husky hooks are installed through the root npm `prepare` lifecycle script, which normally runs automatically after `npm install`.
 
