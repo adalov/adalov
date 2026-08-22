@@ -72,7 +72,7 @@ fix(http)!: change request handler contract
 chore(repo)!: change repository configuration contract
 ```
 
-Adalov does not currently require an additional `BREAKING CHANGE:` footer. Release and versioning automation may build on the `!` marker in the future.
+For now, the `!` header marker is the only breaking-change form documented by Adalov. Do not add a `BREAKING CHANGE:` footer as a second repository convention. Release and versioning automation may build on the `!` marker in the future.
 
 ### Valid and Invalid Examples
 
