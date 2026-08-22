@@ -41,7 +41,7 @@ const readJson = (path) => JSON.parse(
 
 const transformExports = (value) => {
     if (typeof value === 'string') {
-        return value.replace(/^\.\/build\//, './');
+        return value.replace(/^\.\/\.build\//, './');
     }
 
     if (Array.isArray(value)) {
