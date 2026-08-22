@@ -2,6 +2,7 @@
 /.dist
 packages/*/.build/
 packages/*/.test-build/
+packages/*/.coverage/
 packages/*/.tsbuildinfo/
 /playground/.build/
 /playground/.tsbuildinfo/
