@@ -206,6 +206,16 @@ Unit tests should consume package public APIs when practical, for example:
 import { Logger } from '@adalov/common';
 ```
 
+Suite-oriented tests use the `describe()` and `it()` aliases from `node:test`. Top-level suite names use the package prefix followed by the subject under test:
+
+```ts
+describe('[@adalov/common] Logger', () => {
+    it('forwards log events to its output', () => {
+        // ...
+    });
+});
+```
+
 Run the complete unit test workflow with:
 
 ```bash
@@ -230,7 +240,7 @@ The package build runs first so test compilation and runtime package imports res
 
 Tests are intentionally compiled with the repository TypeScript compiler instead of relying on Node.js runtime type stripping. Runtime type stripping does not read `tsconfig.json`, and TypeScript syntax that requires transformation — including decorators — is not handled by the lightweight stripping path. Compiling first keeps unit tests compatible with the same TypeScript semantics as the framework itself.
 
-The current Node.js minimum version already provides the stable test runner and function/method mocking APIs needed by this setup, so unit testing does not currently require increasing the Node.js baseline. Native test coverage remains intentionally deferred while the Node.js coverage interface is experimental.
+Watch mode and native coverage are available as development utilities through `npm run test:watch` and `npm run test:coverage`. Both Node.js features are still experimental in the current baseline, so they are treated as developer tooling rather than test correctness authorities. Coverage is generated per package under `.coverage/` and is used to inspect untested behavior rather than enforce repository thresholds.
 
 ## Repository Lifecycle Commands
 
@@ -240,12 +250,14 @@ Root npm scripts are the primary developer interface. Bash files under `scripts/
 | --- | --- |
 | `npm install` | Installs dependencies, refreshes workspace links, and updates `package-lock.json` when dependency metadata changes. |
 | `npm ci` | Performs a clean dependency installation from the existing lockfile. Existing `node_modules` is removed automatically. |
-| `npm run clear` | Removes generated package builds, TypeScript incremental state, Playground build state, package unit test build state, and distribution artifacts. It does not remove dependencies or the lockfile. |
+| `npm run clear` | Removes generated package builds, TypeScript incremental state, Playground build state, package unit test build/coverage state, and distribution artifacts. It does not remove dependencies or the lockfile. |
 | `npm run build:dev` | Builds all framework packages through the development TypeScript project graph. |
 | `npm run build` | Builds all framework packages through the stricter build project graph. |
 | `npm run prepare:packages` | Clears previous generated outputs, performs a strict build, and prepares distribution artifacts under `.dist/`. |
 | `npm run playground` | Starts the local Playground development server, including TypeScript watch processes and Node.js watch mode. |
 | `npm test` | Builds framework packages, compiles package-local unit tests, and executes the emitted tests with `node --test`. |
+| `npm run test:watch` | Watches framework and test sources and reruns affected emitted tests with Node.js test watch mode. |
+| `npm run test:coverage` | Builds and executes package tests with native Node.js coverage and writes package-local LCOV reports under `.coverage/`. |
 | `npm run validate:branch` | Validates the current branch name when run manually. The same validator is used by the `pre-push` hook. |
 | `npm run commitlint -- <args>` | Runs the repository-local Commitlint configuration. |
 | `npm run tsc -- <args>` | Runs the repository-local TypeScript compiler directly. |
@@ -451,6 +463,12 @@ Unit test compiler output is stored inside each package under:
 
 ```text
 packages/<package>/.test-build/
+```
+
+Native coverage output is stored inside each tested package under:
+
+```text
+packages/<package>/.coverage/
 ```
 
 These generated outputs are ignored by Git and removed by `npm run clear` together with Playground and distribution outputs.
