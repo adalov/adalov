@@ -16,6 +16,7 @@
     "playground:build": "tsc --project playground/tsconfig.json",
     "playground:watch": "tsc --project playground/tsconfig.json --watch",
     "playground:start": "node --watch playground/build/index.js",
+    "test": "bash ./scripts/test.sh",
     "tsc": "tsc",
     "commitlint": "commitlint",
     "validate:branch": "bash scripts/validate-branch-name.sh",
@@ -23,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adalov/adalov.git"
+    "url": "git+https://github.com/francobasaglia/adalov.git"
   },
   "keywords": [
     "nodejs",
