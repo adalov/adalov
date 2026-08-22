@@ -11,6 +11,8 @@
     "build": "tsc --build tsconfig.packages.build.json",
     "build:dev": "tsc --build tsconfig.packages.json",
     "clear": "bash ./scripts/clear.sh",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepare:packages": "bash ./scripts/prepare-packages.sh",
     "playground": "bash ./scripts/playground.sh",
     "playground:build": "tsc --project playground/tsconfig.json",
@@ -62,9 +64,16 @@
     }
   },
   "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/eslint-parser": "^8.0.1",
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "~22.15.4",
+    "eslint": "^10.8.1",
+    "eslint-plugin-perfectionist": "^5.10.1",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
     "husky": "^9.1.7",
     "typescript": "^7.0.2"
   }
