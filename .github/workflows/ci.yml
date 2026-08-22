@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: "0"
+
+      - name: Validate branch name
+        env:
+          PR_BRANCH: ${{ github.head_ref }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          printf 'refs/heads/%s %s refs/heads/%s %s\n' \
+            "$PR_BRANCH" "$PR_HEAD_SHA" \
+            "$PR_BRANCH" "$PR_HEAD_SHA" | \
+            npm run validate:branch
+
+      - name: Validate pull request name
+        env:
+          PR_NAME: ${{ github.event.pull_request.title }}
+        run: npm run validate:pr-name -- "$PR_NAME"
+
+      - name: Validate commits
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npm run commitlint -- --from "$PR_BASE_SHA" --to "$PR_HEAD_SHA" --verbose
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
