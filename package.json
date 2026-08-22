@@ -17,6 +17,8 @@
     "playground:watch": "tsc --project playground/tsconfig.json --watch",
     "playground:start": "node --watch playground/.build/index.js",
     "test": "bash ./scripts/test.sh",
+    "test:watch": "bash ./scripts/test-watch.sh",
+    "test:coverage": "bash ./scripts/test-coverage.sh",
     "tsc": "tsc",
     "commitlint": "commitlint",
     "validate:branch": "bash scripts/validate-branch-name.sh",
