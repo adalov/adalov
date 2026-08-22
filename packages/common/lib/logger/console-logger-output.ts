@@ -6,6 +6,7 @@ import {
     inspect,
     styleText
 } from 'node:util';
+
 import type {
     LoggerEvent,
     LoggerEventDetails,
@@ -81,7 +82,7 @@ export class ConsoleLoggerOutput implements LoggerOutput {
         messageSegments.push(
             this.formatMessage(event.message, event.level, styles)
         );
-        
+
         if (this.config.errorStack && event.error?.stack) {
             messageSegments.push(
                 this.formatErrorStack(event.error.stack)
@@ -129,7 +130,7 @@ export class ConsoleLoggerOutput implements LoggerOutput {
         styles: boolean
     ): string {
         const messageStyle = CONSOLE_LOGGER_STYLE_MAP[loggerLevel];
-        
+
         if (styles && messageStyle) {
             return styleText(messageStyle, message, {
                 validateStream: false
@@ -143,7 +144,10 @@ export class ConsoleLoggerOutput implements LoggerOutput {
         return `\n${errorStack.split('\n').slice(1).join('\n')}`;
     }
 
-    private formatDetails(details: LoggerEventDetails, styles: boolean): string {
+    private formatDetails(
+        details: LoggerEventDetails,
+        styles: boolean
+    ): string {
         return `\n${inspect(details, {
             colors: styles,
             compact: false,
