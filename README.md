@@ -48,8 +48,8 @@ This framework is organized as an npm Workspaces monorepo. Framework packages li
 
 ## Development
 
-TypeScript compiler output is generated locally under `packages/<package>/build/`.
-Distribution-ready package artifacts are prepared separately under `dist/<package>/`.
+TypeScript compiler output is generated locally under `packages/<package>/.build/`.
+Distribution-ready package artifacts are prepared separately under `.dist/<package>/`.
 
 ### Available Commands
 
@@ -57,11 +57,12 @@ Distribution-ready package artifacts are prepared separately under `dist/<packag
 | --- | --- |
 | `npm run build:dev` | Builds all packages using the development TypeScript configuration. |
 | `npm run build` | Builds all packages using the stricter build configuration. |
-| `npm run clear` | Removes generated package builds, TypeScript incremental build state, Playground build state, and distribution artifacts. |
-| `npm run prepare:packages` | Performs a clean build and prepares distribution artifacts under `dist/`. |
+| `npm run clear` | Removes generated package builds, TypeScript incremental build state, Playground build state, unit test build/coverage state, and distribution artifacts. |
+| `npm run prepare:packages` | Performs a clean build and prepares distribution artifacts under `.dist/`. |
 | `npm run playground` | Starts the local Playground development server with TypeScript and Node.js watch mode. |
+| `npm test` | Builds the framework packages, compiles package-local unit test outputs, and runs them with the native Node.js test runner. |
 
-See [Development](./docs/development.md) for the detailed repository lifecycle and TypeScript/ESM conventions.
+See [Development](./docs/development.md) for the detailed repository lifecycle, testing setup, and TypeScript/ESM conventions.
 
 ## Documentation
 

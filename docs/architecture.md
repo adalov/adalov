@@ -93,10 +93,11 @@ packages/<package>/
 ├── index.ts
 ├── package.json
 ├── tsconfig.json
-└── tsconfig.build.json
+├── tsconfig.build.json
+└── tsconfig.tests.json
 ```
 
-This structure defines the integration points between a package and the repository, build, and distribution workflows. It does not prescribe the internal structure of `lib/`.
+This structure defines the integration points between a package and the repository, build, test, and distribution workflows. It does not prescribe the internal structure of `lib/` or `tests/`.
 
 ### Public API and Boundaries
 
@@ -131,7 +132,7 @@ Source package manifests are workspace manifests rather than publishable artifac
 - internal `@adalov/*` dependencies use the `0.0.0` placeholder.
 - packages use ESM with `type: module`.
 
-The root `package.json` owns the canonical Adalov version. During package preparation, publishable manifests are generated under `dist/<package>/` using that root version. Internal `@adalov/*` dependencies are rewritten to the same exact release version.
+The root `package.json` owns the canonical Adalov version. During package preparation, publishable manifests are generated under `.dist/<package>/` using that root version. Internal `@adalov/*` dependencies are rewritten to the same exact release version.
 
 This currently gives Adalov lockstep releases while keeping each package structurally independent.
 
@@ -144,20 +145,22 @@ packages/<package>/ source
         │
         │ TypeScript build
         ▼
-packages/<package>/build/
+packages/<package>/.build/
         │
         │ package preparation
         ▼
-dist/<package>/
+.dist/<package>/
         │
         │ npm pack / publish
         ▼
 consumer
 ```
 
-`packages/<package>/build/` contains local TypeScript compiler output used by the workspace during development.
+`packages/<package>/.build/` contains local TypeScript compiler output used by the workspace during development.
 
-`dist/<package>/` contains the prepared publishable artifact. The preparation step copies only the required compiled output and package files, and generates the distribution `package.json`.
+`.dist/<package>/` contains the prepared publishable artifact. The preparation step copies only the required compiled output and package files, and generates the distribution `package.json`.
+
+Generated compiler, test, and distribution directories use dot-prefixed names because they are repository-private outputs rather than source structure.
 
 TypeScript incremental state is stored separately under `packages/<package>/.tsbuildinfo/` and is never part of a distribution artifact.
 

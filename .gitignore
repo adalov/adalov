@@ -1,8 +1,10 @@
 # Outputs
-/dist
-packages/*/build/
+/.dist
+packages/*/.build/
+packages/*/.test-build/
+packages/*/.coverage/
 packages/*/.tsbuildinfo/
-/playground/build/
+/playground/.build/
 /playground/.tsbuildinfo/
 
 # Dependencies
