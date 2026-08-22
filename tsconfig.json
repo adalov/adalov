@@ -5,6 +5,8 @@
     "emitDecoratorMetadata": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "rewriteRelativeImportExtensions": true,
+    "types": ["node"],
     "resolveJsonModule": true,
     "allowJs": false,
     "sourceMap": false,
