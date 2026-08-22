@@ -1,5 +1,6 @@
 # Outputs
 /dist
+/.test-build/
 packages/*/build/
 packages/*/.tsbuildinfo/
 /playground/build/
