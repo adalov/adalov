@@ -222,7 +222,7 @@ describe('[@adalov/common] ConsoleLoggerOutput', () => {
                 styles: false
             });
             const error = new Error('Unexpected failure');
-            error.stack = undefined;
+            delete error.stack;
 
             output.write({
                 level: 'error',
