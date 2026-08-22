@@ -1,4 +1,22 @@
-import type { LoggerEventDetails, LoggerLevel, LoggerOutput } from './types.ts';
+export type LoggerEventDetails = Record<string, unknown>;
+
+export type LoggerLevel = 'error' | 'info' | 'log' | 'success' | 'warning';
+
+export interface LoggerEvent {
+    details?: LoggerEventDetails;
+    error?: Error;
+    level: LoggerLevel;
+    message: string;
+}
+
+export interface LoggerOutput {
+    write(event: LoggerEvent): void;
+}
+
+export interface LoggerOutputConfig {
+    errorStack: boolean;
+    timestamp: boolean;
+}
 
 export class Logger {
     constructor(

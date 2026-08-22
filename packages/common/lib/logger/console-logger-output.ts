@@ -1,6 +1,55 @@
-import { inspect, styleText } from 'node:util';
-import { CONSOLE_LOGGER_METHOD_MAP, CONSOLE_LOGGER_STYLE_MAP, DEFAULT_CONSOLE_LOGGER_CONFIG } from './constants.ts';
-import type { ConsoleLoggerConfig, LoggerEvent, LoggerEventDetails, LoggerLevel, LoggerOutput } from './types.ts';
+import {
+    stderr,
+    stdout
+} from 'node:process';
+import {
+    inspect,
+    styleText
+} from 'node:util';
+import type {
+    LoggerEvent,
+    LoggerEventDetails,
+    LoggerLevel,
+    LoggerOutput,
+    LoggerOutputConfig
+} from './logger.ts';
+
+type ConsoleLoggerMethod = 'error' | 'info' | 'log' | 'warn';
+
+type ConsoleLoggerStyle = Exclude<
+    Parameters<typeof styleText>[0],
+    unknown[]
+>;
+
+export interface ConsoleLoggerConfig extends LoggerOutputConfig {
+    styles: boolean;
+}
+
+const CONSOLE_LOGGER_METHOD_MAP: Record<
+    LoggerLevel,
+    ConsoleLoggerMethod
+> = {
+    error: 'error',
+    info: 'info',
+    log: 'log',
+    success: 'log',
+    warning: 'warn'
+};
+
+const CONSOLE_LOGGER_STYLE_MAP: Partial<
+    Record<LoggerLevel, ConsoleLoggerStyle>
+> = {
+    error: 'red',
+    info: 'cyan',
+    success: 'green',
+    warning: 'yellow'
+};
+
+const DEFAULT_CONSOLE_LOGGER_CONFIG: ConsoleLoggerConfig = {
+    errorStack: false,
+    timestamp: false,
+    styles: true
+};
 
 export class ConsoleLoggerOutput implements LoggerOutput {
     private readonly config: ConsoleLoggerConfig;
@@ -14,16 +63,21 @@ export class ConsoleLoggerOutput implements LoggerOutput {
 
     public write(event: LoggerEvent): void {
         const method = CONSOLE_LOGGER_METHOD_MAP[event.level];
+        const stream = method === 'error' || method === 'warn'
+            ? stderr
+            : stdout;
+        const styles = this.config.styles && stream.hasColors();
+
         const messageSegments: string[] = [];
 
         if (this.config.timestamp) {
             messageSegments.push(
-                this.formatTimestamp(new Date())
+                this.formatTimestamp(new Date(), styles)
             );
         }
 
         messageSegments.push(
-            this.formatMessage(event.message, event.level)
+            this.formatMessage(event.message, event.level, styles)
         );
         
         if (this.config.errorStack && event.error?.stack) {
@@ -34,14 +88,14 @@ export class ConsoleLoggerOutput implements LoggerOutput {
 
         if (event.details) {
             messageSegments.push(
-                this.formatDetails(event.details)
+                this.formatDetails(event.details, styles)
             );
         }
 
         console[method](...messageSegments);
     }
 
-    private formatTimestamp(now: Date): string {
+    private formatTimestamp(now: Date, styles: boolean): string {
         const isoDate = [
             now.getFullYear(),
             this.pad(now.getMonth() + 1),
@@ -54,18 +108,30 @@ export class ConsoleLoggerOutput implements LoggerOutput {
         ].join(':');
         const isoDateTime = `${isoDate} ${isoTime}`;
 
-        if (this.config.styles) {
-            return `[${styleText('gray', isoDateTime)}]`;
+        if (styles) {
+            const isoDateTimeStyled = styleText(
+                'gray',
+                isoDateTime,
+                { validateStream: false }
+            );
+
+            return `[${isoDateTimeStyled}]`;
         } else {
             return `[${isoDateTime}]`;
         }
     }
 
-    private formatMessage(message: string, loggerLevel: LoggerLevel): string {
+    private formatMessage(
+        message: string,
+        loggerLevel: LoggerLevel,
+        styles: boolean
+    ): string {
         const messageStyle = CONSOLE_LOGGER_STYLE_MAP[loggerLevel];
         
-        if (this.config.styles && messageStyle) {
-            return styleText(messageStyle, message);
+        if (styles && messageStyle) {
+            return styleText(messageStyle, message, {
+                validateStream: false
+            });
         } else {
             return message;
         }
@@ -75,9 +141,9 @@ export class ConsoleLoggerOutput implements LoggerOutput {
         return `\n${errorStack.split('\n').slice(1).join('\n')}`;
     }
 
-    private formatDetails(details: LoggerEventDetails): string {
+    private formatDetails(details: LoggerEventDetails, styles: boolean): string {
         return `\n${inspect(details, {
-            colors: this.config.styles,
+            colors: styles,
             compact: false,
             maxArrayLength: 5
         })}`;
