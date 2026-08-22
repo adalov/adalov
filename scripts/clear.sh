@@ -17,5 +17,8 @@ done
 rm -rf "$PLAYGROUND_BUILD_DIR"
 rm -rf "$PLAYGROUND_DIR/.tsbuildinfo"
 
+# Clear Unit Test outputs
+rm -rf "$TEST_BUILD_DIR"
+
 # Clear Dist output
 rm -rf "$DIST_DIR"
