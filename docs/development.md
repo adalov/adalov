@@ -52,7 +52,8 @@ adalov/
 ├── tsconfig.build.json
 ├── tsconfig.package.json
 ├── tsconfig.packages.json
-└── tsconfig.packages.build.json
+├── tsconfig.packages.build.json
+└── tsconfig.tests.json
 ```
 
 Framework packages are npm workspaces under `packages/`. `playground/` is also a private workspace, but it is a local development consumer rather than a publishable framework package.
@@ -68,6 +69,7 @@ TypeScript configuration is split by responsibility instead of duplicating compi
 | `tsconfig.package.json` | Defines the common source layout for every package: package root as `rootDir`, `build/` as compiler output, `.tsbuildinfo/dev.tsbuildinfo` as development incremental state, and `index.ts` plus `lib/**/*.ts` as package sources. Individual package `tsconfig.json` files extend this configuration and normally contain only package-specific project references. |
 | `tsconfig.packages.json` | Development project graph. References the development `tsconfig.json` of every package and is used by `npm run build:dev`. |
 | `tsconfig.packages.build.json` | Strict build project graph. References the `tsconfig.build.json` of every package and is used by `npm run build`. |
+| `tsconfig.tests.json` | Compiles package unit tests from `packages/*/tests/**/*.test.ts` into the temporary root `.test-build/` directory before they are executed by Node.js. |
 
 ### Native ESM and Relative Imports
 
@@ -164,6 +166,50 @@ The corresponding build configuration must declare build references as well:
 
 TypeScript `references` are not inherited through `extends`, so both development and build graphs must be declared explicitly when a package has internal dependencies.
 
+## Unit Testing
+
+Adalov uses the native Node.js test stack rather than an external test framework:
+
+- `node:test` provides the test runner and built-in mock/spy APIs;
+- `node:assert/strict` provides assertions;
+- TypeScript compiles test sources before execution.
+
+Tests live under each package's existing `tests/` directory and use the `*.test.ts` suffix:
+
+```text
+packages/<package>/tests/**/*.test.ts
+```
+
+Unit tests should consume package public APIs when practical, for example:
+
+```ts
+import { Logger } from '@adalov/common';
+```
+
+Run the complete unit test workflow with:
+
+```bash
+npm test
+```
+
+The command performs the following steps:
+
+```text
+build framework packages
+        ↓
+compile *.test.ts with TypeScript
+        ↓
+.test-build/**/*.test.js
+        ↓
+node --test
+```
+
+The package build runs first so test compilation and runtime package imports resolve through the same workspace public APIs used during normal development. Test compiler output is temporary, ignored by Git, and removed by `npm run clear`.
+
+Tests are intentionally compiled with the repository TypeScript compiler instead of relying on Node.js runtime type stripping. Runtime type stripping does not read `tsconfig.json`, and TypeScript syntax that requires transformation — including decorators — is not handled by the lightweight stripping path. Compiling first keeps unit tests compatible with the same TypeScript semantics as the framework itself.
+
+The current Node.js minimum version already provides the stable test runner and function/method mocking APIs needed by this setup, so unit testing does not currently require increasing the Node.js baseline. Native test coverage remains intentionally deferred while the Node.js coverage interface is experimental.
+
 ## Repository Lifecycle Commands
 
 Root npm scripts are the primary developer interface. Bash files under `scripts/` implement or orchestrate repository workflows behind those commands.
@@ -172,11 +218,12 @@ Root npm scripts are the primary developer interface. Bash files under `scripts/
 | --- | --- |
 | `npm install` | Installs dependencies, refreshes workspace links, and updates `package-lock.json` when dependency metadata changes. |
 | `npm ci` | Performs a clean dependency installation from the existing lockfile. Existing `node_modules` is removed automatically. |
-| `npm run clear` | Removes generated package builds, TypeScript incremental state, Playground build state, and distribution artifacts. It does not remove dependencies or the lockfile. |
+| `npm run clear` | Removes generated package builds, TypeScript incremental state, Playground build state, unit test build state, and distribution artifacts. It does not remove dependencies or the lockfile. |
 | `npm run build:dev` | Builds all framework packages through the development TypeScript project graph. |
 | `npm run build` | Builds all framework packages through the stricter build project graph. |
 | `npm run prepare:packages` | Clears previous generated outputs, performs a strict build, and prepares distribution artifacts under `dist/`. |
 | `npm run playground` | Starts the local Playground development server, including TypeScript watch processes and Node.js watch mode. |
+| `npm test` | Builds framework packages, compiles package unit tests, and executes the emitted tests with `node --test`. |
 | `npm run validate:branch` | Validates the current branch name when run manually. The same validator is used by the `pre-push` hook. |
 | `npm run commitlint -- <args>` | Runs the repository-local Commitlint configuration. |
 | `npm run tsc -- <args>` | Runs the repository-local TypeScript compiler directly. |
@@ -329,6 +376,7 @@ At minimum, run:
 ```bash
 npm run build:dev
 npm run build
+npm test
 npm run prepare:packages
 ```
 
@@ -368,7 +416,13 @@ Incremental TypeScript build state is stored under:
 packages/<package>/.tsbuildinfo/
 ```
 
-It is ignored by Git and removed by `npm run clear` together with compiler and distribution outputs.
+Unit test compiler output is stored separately under:
+
+```text
+.test-build/
+```
+
+Both are ignored by Git and removed by `npm run clear` together with compiler and distribution outputs.
 
 ## More Documentation
 
