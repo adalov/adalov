@@ -66,7 +66,9 @@ export class ConsoleLoggerOutput implements LoggerOutput {
         const stream = method === 'error' || method === 'warn'
             ? stderr
             : stdout;
-        const styles = this.config.styles && stream.hasColors();
+        const styles = this.config.styles
+            && typeof stream.hasColors === 'function'
+            && stream.hasColors();
 
         const messageSegments: string[] = [];
 
