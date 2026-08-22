@@ -4,5 +4,10 @@
     {
       "path": "../common/tsconfig.json"
     }
+  ],
+  "include": [
+    "./index.ts",
+    "./lib/**/*.ts",
+    "./app/**/*.ts"
   ]
 }

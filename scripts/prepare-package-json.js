@@ -39,9 +39,11 @@ const readJson = (path) => JSON.parse(
     fs.readFileSync(path, 'utf8')
 );
 
+const transformBuildPath = (value) => value.replace(/^\.\/\.build\//, './');
+
 const transformExports = (value) => {
     if (typeof value === 'string') {
-        return value.replace(/^\.\/\.build\//, './');
+        return transformBuildPath(value);
     }
 
     if (Array.isArray(value)) {
@@ -61,7 +63,19 @@ const transformExports = (value) => {
 };
 
 const transformBins = (value) => {
-    // @TODO
+    if (typeof value === 'string') {
+        return transformBuildPath(value);
+    }
+
+    if (value && typeof value === 'object') {
+        return Object.fromEntries(
+            Object.entries(value).map(([key, binPath]) => [
+                key,
+                transformBuildPath(binPath)
+            ])
+        );
+    }
+
     return value;
 };
 

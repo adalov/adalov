@@ -8,7 +8,9 @@
     "playground"
   ],
   "scripts": {
+    "prebuild": "bash ./scripts/prepare-build-assets.sh",
     "build": "tsc --build tsconfig.packages.build.json",
+    "prebuild:dev": "bash ./scripts/prepare-build-assets.sh",
     "build:dev": "tsc --build tsconfig.packages.json",
     "clear": "bash ./scripts/clear.sh",
     "prepare:packages": "bash ./scripts/prepare-packages.sh",

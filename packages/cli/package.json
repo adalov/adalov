@@ -9,6 +9,9 @@
       "import": "./.build/index.js"
     }
   },
+  "bin": {
+    "adalov": "./.build/bin/adalov"
+  },
   "dependencies": {
     "@adalov/common": "0.0.0"
   }
