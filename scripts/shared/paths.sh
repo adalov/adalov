@@ -4,9 +4,8 @@ readonly ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
 readonly SCRIPTS_DIR="$ROOT_DIR/scripts"
 readonly PACKAGES_DIR="$ROOT_DIR/packages"
 readonly PLAYGROUND_DIR="$ROOT_DIR/playground"
-readonly PLAYGROUND_BUILD_DIR="$PLAYGROUND_DIR/build"
-readonly DIST_DIR="$ROOT_DIR/dist"
-readonly TEST_BUILD_DIR="$ROOT_DIR/.test-build"
+readonly PLAYGROUND_BUILD_DIR="$PLAYGROUND_DIR/.build"
+readonly DIST_DIR="$ROOT_DIR/.dist"
 
 PACKAGE_DIR() {
   local package_name="$1"
@@ -17,5 +16,11 @@ PACKAGE_DIR() {
 BUILD_DIR() {
   local package_name="$1"
 
-  echo "$(PACKAGE_DIR "$package_name")/build"
+  echo "$(PACKAGE_DIR "$package_name")/.build"
+}
+
+TEST_BUILD_DIR() {
+  local package_name="$1"
+
+  echo "$(PACKAGE_DIR "$package_name")/.test-build"
 }
