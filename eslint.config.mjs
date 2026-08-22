@@ -118,6 +118,16 @@ export default [
     },
     js.configs.recommended,
     {
+        files: ['scripts/**/*.js'],
+        languageOptions: {
+            sourceType: 'commonjs',
+            globals: {
+                process: 'readonly',
+                require: 'readonly'
+            }
+        }
+    },
+    {
         files: ['**/*.ts'],
         languageOptions: {
             parser: babelParser,
@@ -141,14 +151,14 @@ export default [
         },
         rules: {
             'no-dupe-class-members': 'off',
-            'no-undef': 'off',
-            'no-unused-vars': 'off',
             'no-param-reassign': [
                 'error',
                 {
                     props: false
                 }
             ],
+            'no-undef': 'off',
+            'no-unused-vars': 'off',
             '@stylistic/max-len': [
                 'error',
                 {
