@@ -24,3 +24,9 @@ TEST_BUILD_DIR() {
 
   echo "$(PACKAGE_DIR "$package_name")/.test-build"
 }
+
+COVERAGE_DIR() {
+  local package_name="$1"
+
+  echo "$(PACKAGE_DIR "$package_name")/.coverage"
+}
