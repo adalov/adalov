@@ -23,7 +23,7 @@ El nombre pretende ser un pequeño homenaje no sólo a Lovelace, sino también a
 
 ## Requisitos
 
-- Node.js 22 o posterior
+- Node.js 22.13.0 o posterior
 - npm 10 o posterior
 
 ## Primeros pasos
