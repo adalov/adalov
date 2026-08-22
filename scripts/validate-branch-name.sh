@@ -77,12 +77,12 @@ fi
 
 validated_branch=false
 
-while read -r local_ref _ remote_ref _; do
-  if [[ "$local_ref" != refs/heads/* ]]; then
+while read -r _ _ remote_ref _; do
+  if [[ "$remote_ref" != refs/heads/* ]]; then
     continue
   fi
 
-  branch_name="${local_ref#refs/heads/}"
+  branch_name="${remote_ref#refs/heads/}"
   validate_branch_name "$branch_name"
   validated_branch=true
 done
