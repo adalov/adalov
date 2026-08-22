@@ -116,7 +116,10 @@ export default [
             '.dist/**'
         ]
     },
-    js.configs.recommended,
+    {
+        ...js.configs.recommended,
+        files: ['**/*.{js,mjs,cjs}']
+    },
     {
         files: ['scripts/**/*.js'],
         languageOptions: {
@@ -150,15 +153,12 @@ export default [
             'simple-import-sort': simpleImportSort
         },
         rules: {
-            'no-dupe-class-members': 'off',
             'no-param-reassign': [
                 'error',
                 {
                     props: false
                 }
             ],
-            'no-undef': 'off',
-            'no-unused-vars': 'off',
             '@stylistic/max-len': [
                 'error',
                 {
