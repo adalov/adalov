@@ -1,7 +1,5 @@
 # Adalov
 
-[English](./README.md) | [Español](./README.es.md)
-
 Adalov is a Node.js & TypeScript framework for building microservices-oriented applications, designed around a **zero external runtime dependencies** goal.
 
 > [!WARNING]
@@ -34,7 +32,9 @@ Install the repository dependencies from the project root:
 npm install
 ```
 
-This framework is organized as an npm Workspaces monorepo, and packages live under `packages/`.
+Use `npm ci` instead when a reproducible clean installation from the existing `package-lock.json` is desired.
+
+This framework is organized as an npm Workspaces monorepo. Framework packages live under `packages/`, while `playground/` is a private local consumer used during development.
 
 ## Packages
 
@@ -57,12 +57,11 @@ Distribution-ready package artifacts are prepared separately under `dist/<packag
 | --- | --- |
 | `npm run build:dev` | Builds all packages using the development TypeScript configuration. |
 | `npm run build` | Builds all packages using the stricter build configuration. |
-| `npm run clear` | Removes generated package builds, TypeScript incremental build state, and distribution artifacts. |
+| `npm run clear` | Removes generated package builds, TypeScript incremental build state, Playground build state, and distribution artifacts. |
 | `npm run prepare:packages` | Performs a clean build and prepares distribution artifacts under `dist/`. |
-| `npm run tsc -- <args>` | Runs the repository-local TypeScript compiler with the provided arguments. |
-| `npm run commitlint -- <args>` | Runs Commitlint with the provided arguments. |
-| `npm run validate:branch` | Validates the current branch name against the repository branch naming convention. |
-| `npm run prepare` | Installs the repository Husky Git hooks. This is normally invoked automatically by npm. |
+| `npm run playground` | Starts the local Playground development server with TypeScript and Node.js watch mode. |
+
+See [Development](./docs/development.md) for the detailed repository lifecycle and TypeScript/ESM conventions.
 
 ## Documentation
 

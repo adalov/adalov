@@ -1,7 +1,5 @@
 # Repository Conventions
 
-[English](./conventions.md) | [Español](./conventions.es.md)
-
 > [!WARNING]
 > ☣️ **This is an MVP under active development. Anything may change at any time. We do not recommend using this framework in production-level projects.**
 
@@ -59,6 +57,45 @@ Scopes must be lower-case.
 
 When a new package is added, its package name must also be added to `commitScopes` in `commitlint.config.mjs`. See [Adding a New Package](./development.md#adding-a-new-package).
 
+### Breaking Changes
+
+A breaking change is marked by placing `!` immediately after the type/scope portion of the commit header:
+
+```text
+feat(core)!: replace application bootstrap API
+```
+
+The marker is not limited to `feat` or to any particular package scope. Use it whenever a change is intentionally incompatible with the previous public contract, for example:
+
+```text
+fix(http)!: change request handler contract
+chore(repo)!: change repository configuration contract
+```
+
+For now, the `!` header marker is the only breaking-change form documented by Adalov. Do not add a `BREAKING CHANGE:` footer as a second repository convention. Release and versioning automation may build on the `!` marker in the future.
+
+### Valid and Invalid Examples
+
+Valid commit messages:
+
+```text
+feat(core): add application bootstrapper
+fix(http): handle empty request bodies
+chore(repo): update development scripts
+feat(common)!: change logger output contract
+```
+
+Invalid commit messages:
+
+```text
+feature(core): add application bootstrapper
+feat: add application bootstrapper
+feat(Core): add application bootstrapper
+feat(unknown): add application bootstrapper
+```
+
+The examples above are invalid because the type is not allowed, the scope is missing, the scope casing is invalid, or the scope is not registered.
+
 ### Additional Commit Rules
 
 The current Commitlint configuration also enforces:
@@ -79,12 +116,21 @@ Feature branches must follow:
 
 The allowed branch types are read directly from the Commitlint `type-enum` rule, keeping branch and commit types aligned.
 
-Examples:
+Valid examples:
 
 ```text
 chore/initial-setup
 feat/http-router
 fix/core-bootstrap
+```
+
+Invalid examples:
+
+```text
+feature/http-router
+feat/HTTP-router
+feat/http_router
+feat/http/router
 ```
 
 Descriptions must contain lower-case alphanumeric words separated by hyphens.
@@ -96,7 +142,7 @@ main
 develop
 ```
 
-The validation implementation lives in [`scripts/validate-branch-name.sh`](../scripts/validate-branch-name.sh).
+The validation implementation lives in [`scripts/validate-branch-name.sh`](../scripts/validate-branch-name.sh). During `pre-push`, validation is applied to the remote branch ref that will exist in the repository, rather than only to the local branch name.
 
 Run the validation manually with:
 
@@ -111,7 +157,7 @@ The repository uses Husky for local Git hooks.
 | Hook | Path | Description |
 | --- | --- | --- |
 | `commit-msg` | `.husky/commit-msg` | Runs Commitlint against the commit message being created. Invalid commit types, scopes, formatting, or other configured Commitlint rules prevent the commit from completing. |
-| `pre-push` | `.husky/pre-push` | Validates branch names before they are pushed. Branch validation checks pushed branch refs when available and falls back to the current branch when needed. |
+| `pre-push` | `.husky/pre-push` | Validates branch names before they are pushed. Branch validation checks pushed remote branch refs when available and falls back to the current branch when needed. |
 
 Husky hooks are installed through the root npm `prepare` lifecycle script, which normally runs automatically after `npm install`.
 
