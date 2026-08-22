@@ -58,6 +58,8 @@ adalov/
 
 Framework packages are npm workspaces under `packages/`. `playground/` is also a private workspace, but it is a local development consumer rather than a publishable framework package.
 
+Generated compiler, test, and distribution directories use dot-prefixed names because they are repository-private outputs rather than source structure.
+
 ## TypeScript Configuration
 
 TypeScript configuration is split by responsibility instead of duplicating compiler options in every package.
@@ -66,10 +68,10 @@ TypeScript configuration is split by responsibility instead of duplicating compi
 | --- | --- |
 | `tsconfig.json` | Repository-wide base configuration. Defines the common compiler behavior shared by development and build configurations, including strict type checking, native ESM/NodeNext resolution, declarations, decorators, and composite project support. |
 | `tsconfig.build.json` | Extends the base configuration with stricter build-only checks and defines the build-specific TypeScript incremental state location. |
-| `tsconfig.package.json` | Defines the common source layout for every package: package root as `rootDir`, `build/` as compiler output, `.tsbuildinfo/dev.tsbuildinfo` as development incremental state, and `index.ts` plus `lib/**/*.ts` as package sources. Individual package `tsconfig.json` files extend this configuration and normally contain only package-specific project references. |
+| `tsconfig.package.json` | Defines the common source layout for every package: package root as `rootDir`, `.build/` as compiler output, `.tsbuildinfo/dev.tsbuildinfo` as development incremental state, and `index.ts` plus `lib/**/*.ts` as package sources. Individual package `tsconfig.json` files extend this configuration and normally contain only package-specific project references. |
 | `tsconfig.packages.json` | Development project graph. References the development `tsconfig.json` of every package and is used by `npm run build:dev`. |
 | `tsconfig.packages.build.json` | Strict build project graph. References the `tsconfig.build.json` of every package and is used by `npm run build`. |
-| `tsconfig.tests.json` | Compiles package unit tests from `packages/*/tests/**/*.test.ts` into the temporary root `.test-build/` directory before they are executed by Node.js. |
+| `tsconfig.tests.json` | Shared package test configuration. Individual package `tsconfig.tests.json` files extend it so test compiler output remains inside each package under `.test-build/`. |
 
 ### Native ESM and Relative Imports
 
@@ -180,6 +182,24 @@ Tests live under each package's existing `tests/` directory and use the `*.test.
 packages/<package>/tests/**/*.test.ts
 ```
 
+Each package extends the shared test configuration through its own `tsconfig.tests.json`:
+
+```json
+{
+  "extends": "../../tsconfig.tests.json"
+}
+```
+
+This keeps test sources and generated test output inside the package workspace:
+
+```text
+packages/<package>/
+├── tests/
+│   └── **/*.test.ts
+└── .test-build/
+    └── tests/**/*.test.js
+```
+
 Unit tests should consume package public APIs when practical, for example:
 
 ```ts
@@ -197,14 +217,16 @@ The command performs the following steps:
 ```text
 build framework packages
         ↓
-compile *.test.ts with TypeScript
+for each package containing *.test.ts
         ↓
-.test-build/**/*.test.js
+compile package tests with TypeScript
+        ↓
+packages/<package>/.test-build/
         ↓
 node --test
 ```
 
-The package build runs first so test compilation and runtime package imports resolve through the same workspace public APIs used during normal development. Test compiler output is temporary, ignored by Git, and removed by `npm run clear`.
+The package build runs first so test compilation and runtime package imports resolve through the same workspace public APIs used during normal development. Test compiler outputs are temporary, ignored by Git, and removed by `npm run clear`.
 
 Tests are intentionally compiled with the repository TypeScript compiler instead of relying on Node.js runtime type stripping. Runtime type stripping does not read `tsconfig.json`, and TypeScript syntax that requires transformation — including decorators — is not handled by the lightweight stripping path. Compiling first keeps unit tests compatible with the same TypeScript semantics as the framework itself.
 
@@ -218,12 +240,12 @@ Root npm scripts are the primary developer interface. Bash files under `scripts/
 | --- | --- |
 | `npm install` | Installs dependencies, refreshes workspace links, and updates `package-lock.json` when dependency metadata changes. |
 | `npm ci` | Performs a clean dependency installation from the existing lockfile. Existing `node_modules` is removed automatically. |
-| `npm run clear` | Removes generated package builds, TypeScript incremental state, Playground build state, unit test build state, and distribution artifacts. It does not remove dependencies or the lockfile. |
+| `npm run clear` | Removes generated package builds, TypeScript incremental state, Playground build state, package unit test build state, and distribution artifacts. It does not remove dependencies or the lockfile. |
 | `npm run build:dev` | Builds all framework packages through the development TypeScript project graph. |
 | `npm run build` | Builds all framework packages through the stricter build project graph. |
-| `npm run prepare:packages` | Clears previous generated outputs, performs a strict build, and prepares distribution artifacts under `dist/`. |
+| `npm run prepare:packages` | Clears previous generated outputs, performs a strict build, and prepares distribution artifacts under `.dist/`. |
 | `npm run playground` | Starts the local Playground development server, including TypeScript watch processes and Node.js watch mode. |
-| `npm test` | Builds framework packages, compiles package unit tests, and executes the emitted tests with `node --test`. |
+| `npm test` | Builds framework packages, compiles package-local unit tests, and executes the emitted tests with `node --test`. |
 | `npm run validate:branch` | Validates the current branch name when run manually. The same validator is used by the `pre-push` hook. |
 | `npm run commitlint -- <args>` | Runs the repository-local Commitlint configuration. |
 | `npm run tsc -- <args>` | Runs the repository-local TypeScript compiler directly. |
@@ -248,10 +270,11 @@ packages/<package-name>/
 ├── index.ts
 ├── package.json
 ├── tsconfig.json
-└── tsconfig.build.json
+├── tsconfig.build.json
+└── tsconfig.tests.json
 ```
 
-`index.ts` is the package public API boundary. Implementation files belong under `lib/`, while package tests belong under `tests/`. The internal shape of `lib/` is responsibility-driven and is not required to follow a universal file or directory template.
+`index.ts` is the package public API boundary. Implementation files belong under `lib/`, while package tests belong under `tests/`. The internal shape of `lib/` and `tests/` is responsibility-driven and is not required to follow a universal file or directory template.
 
 ### 2. Create the Workspace Manifest
 
@@ -265,8 +288,8 @@ A library package starts with a source manifest similar to:
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/index.d.ts",
-      "import": "./build/index.js"
+      "types": "./.build/index.d.ts",
+      "import": "./.build/index.js"
     }
   }
 }
@@ -312,6 +335,14 @@ Create `packages/<package-name>/tsconfig.build.json`:
 ```
 
 If the package has internal dependencies, add matching references to each dependency's `tsconfig.build.json`.
+
+Create `packages/<package-name>/tsconfig.tests.json`:
+
+```json
+{
+  "extends": "../../tsconfig.tests.json"
+}
+```
 
 The npm dependency graph and the TypeScript project-reference graph should describe the same internal package relationships.
 
@@ -383,13 +414,13 @@ npm run prepare:packages
 Verify that the package produces local compiler output under:
 
 ```text
-packages/<package-name>/build/
+packages/<package-name>/.build/
 ```
 
 and a distribution artifact under:
 
 ```text
-dist/<package-name>/
+.dist/<package-name>/
 ```
 
 ## Build and Distribution
@@ -397,7 +428,7 @@ dist/<package-name>/
 Development builds produce compiler output inside each workspace:
 
 ```text
-packages/<package>/build/
+packages/<package>/.build/
 ```
 
 Strict builds use the same package-local output location but enable the stricter compiler rules from `tsconfig.build.json`.
@@ -405,7 +436,7 @@ Strict builds use the same package-local output location but enable the stricter
 `npm run prepare:packages` performs a clean build and creates distribution-ready artifacts under:
 
 ```text
-dist/<package>/
+.dist/<package>/
 ```
 
 The distribution manifest is generated rather than copied directly from the source workspace. This is where source-only metadata such as `private: true` and placeholder versions are replaced with publishable values.
@@ -416,13 +447,13 @@ Incremental TypeScript build state is stored under:
 packages/<package>/.tsbuildinfo/
 ```
 
-Unit test compiler output is stored separately under:
+Unit test compiler output is stored inside each package under:
 
 ```text
-.test-build/
+packages/<package>/.test-build/
 ```
 
-Both are ignored by Git and removed by `npm run clear` together with compiler and distribution outputs.
+These generated outputs are ignored by Git and removed by `npm run clear` together with Playground and distribution outputs.
 
 ## More Documentation
 
