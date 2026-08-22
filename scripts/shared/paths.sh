@@ -6,6 +6,7 @@ readonly PACKAGES_DIR="$ROOT_DIR/packages"
 readonly PLAYGROUND_DIR="$ROOT_DIR/playground"
 readonly PLAYGROUND_BUILD_DIR="$PLAYGROUND_DIR/build"
 readonly DIST_DIR="$ROOT_DIR/dist"
+readonly TEST_BUILD_DIR="$ROOT_DIR/.test-build"
 
 PACKAGE_DIR() {
   local package_name="$1"
