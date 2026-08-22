@@ -11,7 +11,7 @@ Este documento describe cómo está organizado el monorepo de Adalov para desarr
 
 ## Requisitos
 
-- Node.js 22.13.0 o posterior
+- Node.js 22.15.0 o posterior
 - npm 10 o posterior
 
 Instalá las dependencias desde la raíz del repositorio:

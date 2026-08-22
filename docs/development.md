@@ -11,7 +11,7 @@ This document describes how the Adalov monorepo is organized for local developme
 
 ## Requirements
 
-- Node.js 22.13.0 or newer
+- Node.js 22.15.0 or newer
 - npm 10 or newer
 
 Install dependencies from the repository root:

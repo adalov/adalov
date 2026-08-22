@@ -23,7 +23,7 @@ The name is intended as a small tribute not only to Lovelace, but to the people 
 
 ## Requirements
 
-- Node.js 22.13.0 or newer
+- Node.js 22.15.0 or newer
 - npm 10 or newer
 
 ## Getting Started
