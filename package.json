@@ -15,7 +15,7 @@
     "playground": "bash ./scripts/playground.sh",
     "playground:build": "tsc --project playground/tsconfig.json",
     "playground:watch": "tsc --project playground/tsconfig.json --watch",
-    "playground:start": "node --watch playground/build/index.js",
+    "playground:start": "node --watch playground/.build/index.js",
     "test": "bash ./scripts/test.sh",
     "tsc": "tsc",
     "commitlint": "commitlint",
