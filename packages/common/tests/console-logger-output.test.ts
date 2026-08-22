@@ -130,6 +130,17 @@ describe('[@adalov/common] ConsoleLoggerOutput', () => {
 
             assert.deepEqual(info.mock.calls[0]?.arguments, ['Info']);
         });
+
+        it('does not fail when stderr is not a TTY and hasColors is unavailable', (context) => {
+            mockStreamHasColors(context, stderr, undefined);
+
+            const error = context.mock.method(console, 'error', () => {});
+            const output = new ConsoleLoggerOutput();
+
+            output.write({ level: 'error', message: 'Error' });
+
+            assert.deepEqual(error.mock.calls[0]?.arguments, ['Error']);
+        });
     });
 
     describe('timestamps', () => {
