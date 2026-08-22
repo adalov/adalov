@@ -5,7 +5,7 @@
     "declaration": false,
     "incremental": true,
     "rootDir": "${configDir}/",
-    "outDir": "${configDir}/build",
+    "outDir": "${configDir}/.build",
     "tsBuildInfoFile": "${configDir}/.tsbuildinfo/dev.tsbuildinfo"
   },
   "include": [
