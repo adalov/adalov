@@ -62,23 +62,6 @@ const transformExports = (value) => {
     return value;
 };
 
-const transformBins = (value) => {
-    if (typeof value === 'string') {
-        return transformBuildPath(value);
-    }
-
-    if (value && typeof value === 'object') {
-        return Object.fromEntries(
-            Object.entries(value).map(([key, binPath]) => [
-                key,
-                transformBuildPath(binPath)
-            ])
-        );
-    }
-
-    return value;
-};
-
 const transformDependencies = (dependencies, version) => {
     return Object.fromEntries(
         Object.entries(dependencies).map(([dependency, dependencyVersion]) => [
@@ -152,7 +135,7 @@ const generatePackageJson = (
             exports: transformExports(sourcePackage.exports)
         }),
         ...(sourcePackage.bin && {
-            bin: transformBins(sourcePackage.bin)
+            bin: sourcePackage.bin
         }),
         ...(sourcePackage.dependencies && {
             dependencies: transformDependencies(

@@ -10,7 +10,7 @@
     }
   },
   "bin": {
-    "adalov": "./.build/bin/adalov"
+    "adalov": "./bin/adalov"
   },
   "dependencies": {
     "@adalov/common": "0.0.0"
