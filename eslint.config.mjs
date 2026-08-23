@@ -6,7 +6,6 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 const classMemberGroups = [
     'index-signature',
-
     [
         'public-static-property',
         'public-static-function-property',
@@ -25,7 +24,6 @@ const classMemberGroups = [
         'public-readonly-property',
         'public-readonly-function-property'
     ],
-
     [
         'protected-static-property',
         'protected-static-function-property',
@@ -44,7 +42,6 @@ const classMemberGroups = [
         'protected-readonly-property',
         'protected-readonly-function-property'
     ],
-
     [
         'private-static-property',
         'private-static-function-property',
@@ -63,13 +60,10 @@ const classMemberGroups = [
         'private-readonly-property',
         'private-readonly-function-property'
     ],
-
     'static-block',
-
     'public-constructor',
     'protected-constructor',
     'private-constructor',
-
     [
         'public-static-get-method',
         'public-static-set-method',
@@ -80,7 +74,6 @@ const classMemberGroups = [
         'public-set-method',
         'public-method'
     ],
-
     [
         'protected-static-get-method',
         'protected-static-set-method',
@@ -91,7 +84,6 @@ const classMemberGroups = [
         'protected-set-method',
         'protected-method'
     ],
-
     [
         'private-static-get-method',
         'private-static-set-method',
@@ -102,7 +94,6 @@ const classMemberGroups = [
         'private-set-method',
         'private-method'
     ],
-
     'unknown'
 ];
 
@@ -163,6 +154,7 @@ export default [
                 'error',
                 {
                     code: 80,
+                    ignoreStrings: true,
                     ignoreUrls: true,
                     tabWidth: 4
                 }
