@@ -135,12 +135,7 @@ feat/http/router
 
 Descriptions must contain lower-case alphanumeric words separated by hyphens.
 
-Permanent branches are defined centrally in [`scripts/shared/branches.sh`](../scripts/shared/branches.sh) and are exempt from this rule. The current permanent branches are:
-
-```text
-main
-develop
-```
+Permanent branches are defined centrally in [`scripts/shared/branches.sh`](../scripts/shared/branches.sh) and are exempt from this rule. The only permanent branch is `main`. Feature and maintenance branches are created from `main` and proposed back to `main` through pull requests. There is no permanent `develop` branch.
 
 The validation implementation lives in [`scripts/validate-branch-name.sh`](../scripts/validate-branch-name.sh). During `pre-push`, validation is applied to the remote branch ref that will exist in the repository, rather than only to the local branch name.
 
@@ -149,6 +144,20 @@ Run the validation manually with:
 ```bash
 npm run validate:branch
 ```
+
+## Pull Request Validation
+
+Pull requests targeting `main` are validated by [GitHub Actions](../.github/workflows/ci.yml). The CI workflow runs when a pull request is opened, updated with new commits, reopened, or its metadata is edited.
+
+The workflow performs the following checks:
+
+1. Installs dependencies with `npm ci`.
+2. Validates the source branch name using `npm run validate:branch`.
+3. Validates the pull request title through `npm run validate:pr-name`, using the same Commitlint conventions as commit messages.
+4. Validates every commit in the pull request using Commitlint.
+5. Runs `npm run lint`, `npm run build`, and `npm test`.
+
+CI checks complement the local Git hooks, which can be bypassed or unavailable in some environments. A successful workflow does not replace the repository's required review and merge process.
 
 ## Git Hooks
 
