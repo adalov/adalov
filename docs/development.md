@@ -258,13 +258,32 @@ Root npm scripts are the primary developer interface. Bash files under `scripts/
 | `npm test` | Builds framework packages, compiles package-local unit tests, and executes the emitted tests with `node --test`. |
 | `npm run test:watch` | Watches framework and test sources and reruns affected emitted tests with Node.js test watch mode. |
 | `npm run test:coverage` | Builds and executes package tests with native Node.js coverage and writes package-local LCOV reports under `.coverage/`. |
-| `npm run validate:branch` | Validates the current branch name when run manually. The same validator is used by the `pre-push` hook. |
+| `npm run validate:branch` | Validates branch names manually or in the `pre-push` hook and CI. |
 | `npm run commitlint -- <args>` | Runs the repository-local Commitlint configuration. |
+| `npm run validate:pr-name -- "<title>"` | Validates a pull request title against the Commitlint conventions. |
+| `npm run lint` | Checks source files against the repository ESLint rules. |
+| `npm run lint:fix` | Applies automatic ESLint fixes where available. |
 | `npm run tsc -- <args>` | Runs the repository-local TypeScript compiler directly. |
 
 The repository does not currently provide a command that removes `package-lock.json`. Lockfile regeneration should be an intentional dependency-management action rather than a side effect of normal cleanup.
 
 The lower-level `playground:build`, `playground:watch`, and `playground:start` scripts support `npm run playground` and normally do not need to be invoked individually.
+
+## Pull Request Checks
+
+The CI workflow in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) runs for pull requests targeting the permanent `main` branch. It installs dependencies, validates the source branch, pull request title, and commits, then runs lint, strict build, and unit tests.
+
+ESLint uses the Babel TypeScript parser for syntactic and style rules; TypeScript compilation remains responsible for type checking. Current TypeScript lint rules include sorted imports and exports, class member ordering, and an 80-column maximum with configured exceptions. Prettier is not part of the workflow.
+
+Run the principal checks locally with:
+
+```bash
+npm run lint
+npm run build
+npm test
+```
+
+Refer to [Repository Conventions](./conventions.md) for branch and pull request naming rules.
 
 ## Adding a New Package
 
