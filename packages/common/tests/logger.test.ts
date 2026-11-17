@@ -3,6 +3,7 @@ import {
     describe,
     it
 } from 'node:test';
+
 import {
     Logger,
     type LoggerEvent,
@@ -39,60 +40,77 @@ const LEVEL_CASES: ReadonlyArray<{
 describe('[@adalov/common] Logger', () => {
     describe('level methods', () => {
         for (const testCase of LEVEL_CASES) {
-            it(`forwards ${testCase.level} events without optional fields`, (context) => {
-                const write = context.mock.fn((_event: LoggerEvent): void => {});
-                const logger = new Logger({ write });
+            it(
+                `forwards ${testCase.level} events without optional fields`,
+                (context) => {
+                    const write = context.mock.fn(
+                        (_event: LoggerEvent): void => {}
+                    );
+                    const logger = new Logger({ write });
 
-                testCase.invoke(logger, 'Message');
+                    testCase.invoke(logger, 'Message');
 
-                assert.equal(write.mock.callCount(), 1);
-                assert.deepEqual(write.mock.calls[0]?.arguments, [
-                    {
-                        level: testCase.level,
-                        message: 'Message'
-                    }
-                ]);
-            });
+                    assert.equal(write.mock.callCount(), 1);
+                    assert.deepEqual(write.mock.calls[0]?.arguments, [
+                        {
+                            level: testCase.level,
+                            message: 'Message'
+                        }
+                    ]);
+                }
+            );
 
-            it(`forwards ${testCase.level} event details`, (context) => {
-                const write = context.mock.fn((_event: LoggerEvent): void => {});
-                const logger = new Logger({ write });
-                const details = {
-                    requestId: 'request-1'
-                };
+            it(
+                `forwards ${testCase.level} event details`,
+                (context) => {
+                    const write = context.mock.fn(
+                        (_event: LoggerEvent): void => {}
+                    );
+                    const logger = new Logger({ write });
+                    const details = {
+                        requestId: 'request-1'
+                    };
 
-                testCase.invoke(logger, 'Message', details);
+                    testCase.invoke(logger, 'Message', details);
 
-                assert.equal(write.mock.callCount(), 1);
-                assert.deepEqual(write.mock.calls[0]?.arguments, [
-                    {
-                        level: testCase.level,
-                        message: 'Message',
-                        details
-                    }
-                ]);
-            });
+                    assert.equal(write.mock.callCount(), 1);
+                    assert.deepEqual(write.mock.calls[0]?.arguments, [
+                        {
+                            level: testCase.level,
+                            message: 'Message',
+                            details
+                        }
+                    ]);
+                }
+            );
         }
     });
 
     describe('error', () => {
-        it('forwards string errors without an Error instance', (context) => {
-            const write = context.mock.fn((_event: LoggerEvent): void => {});
-            const logger = new Logger({ write });
+        it(
+            'forwards string errors without an Error instance',
+            (context) => {
+                const write = context.mock.fn(
+                    (_event: LoggerEvent): void => {}
+                );
+                const logger = new Logger({ write });
 
-            logger.error('Unexpected failure');
+                logger.error('Unexpected failure');
 
-            assert.equal(write.mock.callCount(), 1);
-            assert.deepEqual(write.mock.calls[0]?.arguments, [
-                {
-                    level: 'error',
-                    message: 'Unexpected failure'
-                }
-            ]);
-        });
+                assert.equal(write.mock.callCount(), 1);
+                assert.deepEqual(write.mock.calls[0]?.arguments, [
+                    {
+                        level: 'error',
+                        message: 'Unexpected failure'
+                    }
+                ]);
+            }
+        );
 
         it('forwards string error details', (context) => {
-            const write = context.mock.fn((_event: LoggerEvent): void => {});
+            const write = context.mock.fn(
+                (_event: LoggerEvent): void => {}
+            );
             const logger = new Logger({ write });
             const details = {
                 requestId: 'request-1'
@@ -110,42 +128,52 @@ describe('[@adalov/common] Logger', () => {
             ]);
         });
 
-        it('forwards Error instances with their original reference', (context) => {
-            const write = context.mock.fn((_event: LoggerEvent): void => {});
-            const logger = new Logger({ write });
-            const error = new Error('Unexpected failure');
+        it(
+            'forwards Error instances with their original reference',
+            (context) => {
+                const write = context.mock.fn(
+                    (_event: LoggerEvent): void => {}
+                );
+                const logger = new Logger({ write });
+                const error = new Error('Unexpected failure');
 
-            logger.error(error);
+                logger.error(error);
 
-            assert.equal(write.mock.callCount(), 1);
-            assert.deepEqual(write.mock.calls[0]?.arguments, [
-                {
-                    level: 'error',
-                    message: 'Unexpected failure',
-                    error
-                }
-            ]);
-        });
+                assert.equal(write.mock.callCount(), 1);
+                assert.deepEqual(write.mock.calls[0]?.arguments, [
+                    {
+                        level: 'error',
+                        message: 'Unexpected failure',
+                        error
+                    }
+                ]);
+            }
+        );
 
-        it('forwards Error instances together with details', (context) => {
-            const write = context.mock.fn((_event: LoggerEvent): void => {});
-            const logger = new Logger({ write });
-            const error = new Error('Unexpected failure');
-            const details = {
-                requestId: 'request-1'
-            };
+        it(
+            'forwards Error instances together with details',
+            (context) => {
+                const write = context.mock.fn(
+                    (_event: LoggerEvent): void => {}
+                );
+                const logger = new Logger({ write });
+                const error = new Error('Unexpected failure');
+                const details = {
+                    requestId: 'request-1'
+                };
 
-            logger.error(error, details);
+                logger.error(error, details);
 
-            assert.equal(write.mock.callCount(), 1);
-            assert.deepEqual(write.mock.calls[0]?.arguments, [
-                {
-                    level: 'error',
-                    message: 'Unexpected failure',
-                    details,
-                    error
-                }
-            ]);
-        });
+                assert.equal(write.mock.callCount(), 1);
+                assert.deepEqual(write.mock.calls[0]?.arguments, [
+                    {
+                        level: 'error',
+                        message: 'Unexpected failure',
+                        details,
+                        error
+                    }
+                ]);
+            }
+        );
     });
 });
