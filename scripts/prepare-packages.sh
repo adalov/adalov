@@ -28,6 +28,22 @@ for package in "${PACKAGES[@]}"; do
   # Copy build output
   cp -R "$package_build_dir/." "$package_dist_dir/"
 
+  # Copy and prepare bin files
+  if [ -d "$package_dir/bin" ]; then
+    cp -R "$package_dir/bin" "$package_dist_dir/bin"
+
+    for bin_file in "$package_dist_dir/bin/"*; do
+      if [ ! -f "$bin_file" ]; then
+        continue
+      fi
+
+      tmp_file="$(mktemp)"
+      sed 's#\.\./\.build/app/#../app/#g' "$bin_file" > "$tmp_file"
+      cat "$tmp_file" > "$bin_file"
+      rm "$tmp_file"
+    done
+  fi
+
   # Copy README file
   cp "$package_dir/README.md" "$package_dist_dir/README.md"
 
