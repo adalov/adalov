@@ -2,5 +2,4 @@
 
 readonly PERMANENT_BRANCHES=(
   "main"
-  "develop"
 )
