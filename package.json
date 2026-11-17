@@ -10,9 +10,9 @@
   "scripts": {
     "build": "tsc --build tsconfig.packages.build.json",
     "build:dev": "tsc --build tsconfig.packages.json",
+    "check": "npm run lint && npm run build && npm run test",
     "clear": "bash ./scripts/clear.sh",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "prepare:packages": "bash ./scripts/prepare-packages.sh",
     "playground": "bash ./scripts/playground.sh",
     "playground:build": "tsc --project playground/tsconfig.json",

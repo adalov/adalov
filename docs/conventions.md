@@ -135,7 +135,7 @@ feat/http/router
 
 Descriptions must contain lower-case alphanumeric words separated by hyphens.
 
-Permanent branches are defined centrally in [`scripts/shared/branches.sh`](../scripts/shared/branches.sh) and are exempt from this rule. The only permanent branch is `main`. Feature and maintenance branches are created from `main` and proposed back to `main` through pull requests. There is no permanent `develop` branch.
+Permanent branches are defined centrally in [`scripts/shared/branches.sh`](../scripts/shared/branches.sh) and are exempt from this rule. The only permanent branch is `main`. Feature and maintenance branches are created from `main` and proposed back to `main` through pull requests.
 
 The validation implementation lives in [`scripts/validate-branch-name.sh`](../scripts/validate-branch-name.sh). During `pre-push`, validation is applied to the remote branch ref that will exist in the repository, rather than only to the local branch name.
 
@@ -155,7 +155,7 @@ The workflow performs the following checks:
 2. Validates the source branch name using `npm run validate:branch`.
 3. Validates the pull request title through `npm run validate:pr-name`, using the same Commitlint conventions as commit messages.
 4. Validates every commit in the pull request using Commitlint.
-5. Runs `npm run lint`, `npm run build`, and `npm test`.
+5. Runs `npm run lint`, `npm run build`, and `npm run test`.
 
 CI checks complement the local Git hooks, which can be bypassed or unavailable in some environments. A successful workflow does not replace the repository's required review and merge process.
 
@@ -166,7 +166,7 @@ The repository uses Husky for local Git hooks.
 | Hook | Path | Description |
 | --- | --- | --- |
 | `commit-msg` | `.husky/commit-msg` | Runs Commitlint against the commit message being created. Invalid commit types, scopes, formatting, or other configured Commitlint rules prevent the commit from completing. |
-| `pre-push` | `.husky/pre-push` | Validates branch names before they are pushed. Branch validation checks pushed remote branch refs when available and falls back to the current branch when needed. |
+| `pre-push` | `.husky/pre-push` | Validates the pushed branch name and then runs `npm run check` (lint, strict build, and unit tests). Branch validation checks remote refs when available and falls back to the current branch when needed. |
 
 Husky hooks are installed through the root npm `prepare` lifecycle script, which normally runs automatically after `npm install`.
 
@@ -184,7 +184,7 @@ Branch validation can be invoked with:
 npm run validate:branch
 ```
 
-These commands use the same configuration as the Git hooks and should be preferred over duplicating validation rules elsewhere.
+The complete local validation can be run with `npm run check`. These commands use the same configuration as the Git hooks and should be preferred over duplicating validation rules elsewhere.
 
 ## More Documentation
 
